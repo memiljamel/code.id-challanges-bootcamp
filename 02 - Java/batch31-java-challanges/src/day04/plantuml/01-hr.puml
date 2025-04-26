@@ -1,0 +1,27 @@
+@startuml hr-class
+
+
+
+class Salary{
+    -LocalDate payDay;
+    -double totalSalary;
+}
+
+class SalesAllowance extends Salary{
+    -double bonus
+    -double commision
+    -double totalSalary;
+}
+
+class ProgrammerAllowance extends Salary{
+    -double transportasi
+    -double totalSalary;
+}
+
+class QaAllowance extends Salary{
+    -double makan
+}
+
+
+
+@enduml

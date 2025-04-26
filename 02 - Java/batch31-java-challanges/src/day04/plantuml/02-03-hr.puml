@@ -1,0 +1,83 @@
+@startuml hr-class
+
+class Main{
+
+}
+
+interface IEmployee{
+    +List<Employee> initListEmployee()
+    +generateSalary(List<Programmer) employess)
+    +dispayEmployee(List<Programmer)
+}
+
+class EmployeeImpl implements IEmployee{
+
+}
+
+interface ISalary{
+    +calculateSalary()
+    +calcTax()
+}
+
+class Salary{
+    - LocalDate payDay;
+}
+
+class Commission {
+    -double bonus
+    -double commision
+}
+
+class Transport {
+    -double transportasi
+    -double spj
+    -double bensin
+}
+
+class Overtime {
+    -double makan
+}
+
+class Medical {
+    - double kacamata
+}
+
+
+class Employee{
+    -int empId
+    -String fullName
+    -Role role;
+    -double salary
+    -double totalSalary
+}
+
+class Programmer extends Employee{
+    - Transport transport
+    - Overtime overtime
+    --
+}
+
+class Sales extends Employee{
+    - Commission commision
+    - Overtime overtime
+    --
+}
+
+class QA extends Employee{
+    - Overtime overtime
+    --
+}
+
+Main --> IEmployee
+EmployeeImpl --> Programmer
+
+Commission -down-|> Salary
+Overtime -up-|> Salary
+Transport -right-|> Salary
+Medical --|> Salary
+
+Programmer ..|> ISalary
+Sales ..|> ISalary
+QA ..|> ISalary
+
+@enduml

@@ -1,0 +1,61 @@
+@startuml hr-class
+
+interface ISalary{
+    +calculateSalary()
+    +calcTax()
+}
+
+class Salary{
+    -LocalDate payDay;
+    -double totalSalary;
+}
+
+class Commission extends Salary{
+    -double bonus
+    -double commision
+}
+
+class Transport extends Salary{
+    -double transportasi
+    -double spj
+    -double bensin
+}
+
+class Overtime extends Salary{
+    -double makan
+}
+
+class Medical extends Salary{
+    - double kacamata
+}
+
+
+class Employee{
+    -int empId
+    -String fullName
+    -Role role;
+    -double salary
+}
+
+class Programmer extends Employee{
+    - Transport transport
+    - Overtime overtime
+    --
+}
+
+class Sales extends Employee{
+    - Commission commision
+    - Overtime overtime
+    --
+}
+
+class QA extends Employee{
+    - Overtime overtime
+    --
+}
+
+Programmer ..|> ISalary
+Sales ..|> ISalary
+QA ..|> ISalary
+
+@enduml
