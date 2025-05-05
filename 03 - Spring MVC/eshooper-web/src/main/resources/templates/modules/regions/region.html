@@ -1,0 +1,34 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:with="http://www.thymeleaf.org/extras/with" layout:decorate="~{main_layout}" with:title="index">
+<th:block layout:fragment="content">
+   
+    <ul class="nav navbar-nav navbar-right">
+        <li><a  th:href="@{/regions/add}"><i class="fa fa-plus"></i> Add</a></li>
+    </ul>
+    <h7 th:text="${message}" class="text-info"></h7>
+    <table class="table table-bordered text-center mb-0">
+        <thead class="bg-secondary text-dark">
+            <tr>
+                <th>Region Id</th>
+                <th>Region Name</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+            <tr th:each="region : ${regions}">
+                <td class="align-middle" th:text="${region.regionId}"></td>
+                <td style="text-align: left;" th:text="${region.regionName}"></td>
+                <td class="cart_edit">
+                    <a class="cart_quantity_input" th:href="@{edit/{id}(id=${region.regionId})}"><i class="fa fa-edit"></i></a>
+                </td>
+                <td class="cart_delete">
+                    <a class="cart_quantity_delete" th:href="@{delete/{id}(id=${region.regionId})}"><i
+                            class="fa fa-times"></i></a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    
+</th:block>

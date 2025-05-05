@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Table Employee</h3>
+    <table>
+        <thead>
+            <tr>EmpId</tr>
+            <tr>FullName</tr>
+            <tr>HireDate</tr>
+            <tr>Salary</tr>
+        </thead>
+        <tbody>
+            <tr th:each="emps : ${employees}">
+                <td th:text="${emps.empId}"></td>
+                <td th:text="${emps.fullName}"></td>
+                <td th:text="${emps.hireDate}"></td>
+                <td th:text="${emps.salary}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
