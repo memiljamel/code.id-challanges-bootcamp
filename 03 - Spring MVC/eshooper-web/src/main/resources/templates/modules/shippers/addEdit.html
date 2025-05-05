@@ -16,7 +16,13 @@
                     </div>
                     <div class="form-group">
 
-                    <input type="hidden" placeholder="" th:field="*{shipperId}">
+                    <input type="number" name="name" class="form-control" placeholder="shipper id"
+                           th:field="*{shipperId}">
+
+                    <div th:if="${#fields.hasErrors('shipperId')}">
+                        <div class="text-danger" th:errors="*{shipperId}"></div>
+
+                    </div>
 
                     <input type="text" name="name" class="form-control" placeholder="company name"
                         th:field="*{companyName}">
@@ -45,5 +51,6 @@
         </div>
 
     </div>
+</div>
 
 </th:block> 

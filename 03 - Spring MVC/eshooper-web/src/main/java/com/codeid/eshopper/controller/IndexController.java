@@ -1,6 +1,7 @@
 package com.codeid.eshopper.controller;
 
 import com.codeid.eshopper.model.Employee;
+import com.codeid.eshopper.service.CategoryService;
 import com.codeid.eshopper.service.DepartmentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +15,18 @@ import java.util.Arrays;
 public class IndexController {
 
     private final DepartmentService departmentService;
+    private final CategoryService categoryService;
 
-    public IndexController(DepartmentService departmentService) {
+    public IndexController(DepartmentService departmentService, CategoryService categoryService) {
         this.departmentService = departmentService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/")
     public String showIndex(Model model) {
         model.addAttribute("title", "Hello Bootcamp Java 2025");
         model.addAttribute("departments", departmentService.findAllDepartment());
+        model.addAttribute("categories", categoryService.findAllCategory());
 
         return "index";
     }

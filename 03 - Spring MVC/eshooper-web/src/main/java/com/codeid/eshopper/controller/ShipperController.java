@@ -2,6 +2,7 @@ package com.codeid.eshopper.controller;
 
 import com.codeid.eshopper.entities.Shipper;
 import com.codeid.eshopper.service.CategoryService;
+import com.codeid.eshopper.service.DepartmentService;
 import com.codeid.eshopper.service.ShipperService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -21,26 +22,30 @@ import java.util.Optional;
 public class ShipperController {
 
     private final ShipperService shipperService;
+    private final DepartmentService departmentService;
     private final CategoryService categoryService;
 
-
-    public ShipperController(ShipperService shipperService, CategoryService categoryService) {
+    public ShipperController(ShipperService shipperService, DepartmentService departmentService, CategoryService categoryService) {
         this.shipperService = shipperService;
+        this.departmentService = departmentService;
         this.categoryService = categoryService;
     }
 
     @GetMapping("/")
     public String findAllShipper(Model model) {
         model.addAttribute("shippers", shipperService.findAllShipper());
-        model.addAttribute("category", categoryService.findAllCategory());
+        model.addAttribute("departments", departmentService.findAllDepartment());
+        model.addAttribute("categories", categoryService.findAllCategory());
 
         return "/modules/shippers/shipper.html";
     }
 
     @GetMapping("/add")
     public String addShipper(Model model) {
-        model.addAttribute("shipper", new Shipper());
         model.addAttribute("action", "Add Region");
+        model.addAttribute("shipper", new Shipper());
+        model.addAttribute("departments", departmentService.findAllDepartment());
+        model.addAttribute("categories", categoryService.findAllCategory());
 
         return "/modules/shippers/addEdit.html";
     }
@@ -63,11 +68,11 @@ public class ShipperController {
 
         model.addAttribute("action", "Edit Shipper");
         model.addAttribute("shipper", shipper.get());
+        model.addAttribute("departments", departmentService.findAllDepartment());
+        model.addAttribute("categories", categoryService.findAllCategory());
 
         return "modules/shippers/addEdit.html";
-
     }
-
 
     @GetMapping("delete/{id}")
     public String deleteShipper(@PathVariable(name = "id") Long shipperId, RedirectAttributes redirectAttrs) {

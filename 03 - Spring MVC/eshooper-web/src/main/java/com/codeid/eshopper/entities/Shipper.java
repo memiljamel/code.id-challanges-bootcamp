@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 public class Shipper {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shipper_id")
     private Long shipperId;
 

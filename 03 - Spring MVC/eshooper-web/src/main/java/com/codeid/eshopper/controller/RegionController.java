@@ -25,7 +25,6 @@ public class RegionController {
     private final DepartmentService departmentService;
     private final CategoryService categoryService;
 
-
     public RegionController(RegionService regionService, DepartmentService departmentService, CategoryService categoryService) {
         this.regionService = regionService;
         this.departmentService = departmentService;
@@ -36,15 +35,17 @@ public class RegionController {
     public String findAllRegion(Model model) {
         model.addAttribute("regions", regionService.findAllCategory());
         model.addAttribute("departments", departmentService.findAllDepartment());
-        model.addAttribute("category", categoryService.findAllCategory());
+        model.addAttribute("categories", categoryService.findAllCategory());
 
         return "/modules/regions/region.html";
     }
 
     @GetMapping("/add")
     public String addRegion(Model model) {
-        model.addAttribute("region", new Region());
         model.addAttribute("action", "Add Region");
+        model.addAttribute("region", new Region());
+        model.addAttribute("departments", departmentService.findAllDepartment());
+        model.addAttribute("categories", categoryService.findAllCategory());
 
         return "/modules/regions/addEdit.html";
     }
@@ -67,10 +68,11 @@ public class RegionController {
 
         model.addAttribute("action", "Edit Region");
         model.addAttribute("region", region.get());
+        model.addAttribute("departments", departmentService.findAllDepartment());
+        model.addAttribute("categories", categoryService.findAllCategory());
 
         return "modules/regions/addEdit.html";
     }
-
 
     @GetMapping("delete/{id}")
     public String deleteRegion(@PathVariable(name = "id") Long regionId, RedirectAttributes redirectAttrs) {
