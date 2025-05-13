@@ -4,10 +4,11 @@ import com.codeid.oe.model.dto.ShipperDto;
 import com.codeid.oe.model.entity.Shipper;
 import com.codeid.oe.repository.ShipperRepository;
 import com.codeid.oe.service.ShipperService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class ShipperServiceImpl implements ShipperService {
         log.debug("Request to get shipper : {}", id);
 
         Shipper shipper = this.shipperRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("shipper not found with id " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Shipper not found with id " + id));
 
         return mapToDto(shipper);
     }
@@ -55,8 +56,8 @@ public class ShipperServiceImpl implements ShipperService {
     public ShipperDto update(Short id, ShipperDto entity) {
         log.debug("Request to update shipper : {}", id);
 
-        var shipper = this.shipperRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("shipper not found with id " + id));
+        Shipper shipper = this.shipperRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Shipper not found with id " + id));
         shipper.setCompanyName(entity.getCompanyName());
         shipper.setPhone(entity.getPhone());
         this.shipperRepository.save(shipper);
@@ -68,8 +69,8 @@ public class ShipperServiceImpl implements ShipperService {
     public void delete(Short id) {
         log.debug("Request to delete shipper : {}", id);
 
-        var shipper = this.shipperRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("shipper not found with id " + id));
+        Shipper shipper = this.shipperRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Shipper not found with id " + id));
 
         this.shipperRepository.delete(shipper);
     }
@@ -78,7 +79,9 @@ public class ShipperServiceImpl implements ShipperService {
         return new ShipperDto(
                 shipper.getShipperId(),
                 shipper.getCompanyName(),
-                shipper.getPhone()
+                shipper.getPhone(),
+                shipper.getCreateDate(),
+                shipper.getModifiedDate()
         );
     }
 }

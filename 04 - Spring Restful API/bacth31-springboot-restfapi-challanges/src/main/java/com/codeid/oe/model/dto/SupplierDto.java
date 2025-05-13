@@ -1,11 +1,12 @@
 package com.codeid.oe.model.dto;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
@@ -31,4 +32,8 @@ public class SupplierDto {
     private String fax;
 
     private String homepage;
+
+    private Instant createdDate;
+
+    private Instant modifiedDate;
 }

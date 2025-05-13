@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,4 +23,8 @@ public class CategoryDto {
     private String description;
 
     private byte[] picture;
+
+    private Instant createdDate;
+
+    private Instant modifiedDate;
 }

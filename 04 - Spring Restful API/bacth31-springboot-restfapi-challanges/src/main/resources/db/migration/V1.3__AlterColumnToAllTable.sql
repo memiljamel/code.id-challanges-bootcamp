@@ -1,0 +1,47 @@
+ALTER TABLE oe.shippers
+    ADD COLUMN created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE oe.shippers
+    ADD COLUMN modified_date TIMESTAMP;
+
+ALTER TABLE oe.employees
+    ADD COLUMN created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE oe.employees
+    ADD COLUMN modified_date TIMESTAMP;
+
+ALTER TABLE oe.customers
+    ADD COLUMN created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE oe.customers
+    ADD COLUMN modified_date TIMESTAMP;
+
+ALTER TABLE oe.orders
+    ADD COLUMN created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE oe.orders
+    ADD COLUMN modified_date TIMESTAMP;
+
+ALTER TABLE oe.suppliers
+    ADD COLUMN created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE oe.suppliers
+    ADD COLUMN modified_date TIMESTAMP;
+
+ALTER TABLE oe.categories
+    ADD COLUMN created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE oe.categories
+    ADD COLUMN modified_date TIMESTAMP;
+
+ALTER TABLE oe.products
+    ADD COLUMN created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE oe.products
+    ADD COLUMN modified_date TIMESTAMP;
+
+ALTER TABLE oe.order_details
+    ADD COLUMN created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE oe.order_details
+    ADD COLUMN modified_date TIMESTAMP;

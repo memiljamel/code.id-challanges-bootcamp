@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +30,7 @@ public class Category extends AbstractEntity {
     private String description;
 
     private byte[] picture;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }

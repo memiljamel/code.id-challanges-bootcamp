@@ -1,10 +1,10 @@
-package codeid.eshopper_backend;
+package codeid.oe;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EshopperBackendApplicationTests {
+class OeApplicationTests {
 
 	@Test
 	void contextLoads() {

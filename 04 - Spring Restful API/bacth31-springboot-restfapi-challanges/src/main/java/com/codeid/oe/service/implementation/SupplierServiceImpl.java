@@ -4,10 +4,11 @@ import com.codeid.oe.model.dto.SupplierDto;
 import com.codeid.oe.model.entity.Supplier;
 import com.codeid.oe.repository.SupplierRepository;
 import com.codeid.oe.service.SupplierService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class SupplierServiceImpl implements SupplierService {
         log.debug("Request to get supplier : {}", id);
 
         Supplier supplier = this.supplierRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("supplier not found with id " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found with id " + id));
 
         return mapToDto(supplier);
     }
@@ -60,7 +61,7 @@ public class SupplierServiceImpl implements SupplierService {
         log.debug("Request to update supplier : {}", id);
 
         Supplier supplier = this.supplierRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("supplier not found with id " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found with id " + id));
         supplier.setCompanyName(entity.getCompanyName());
         supplier.setContactName(entity.getContactName());
         supplier.setContactTitle(entity.getContactTitle());
@@ -77,20 +78,22 @@ public class SupplierServiceImpl implements SupplierService {
         log.debug("Request to delete supplier : {}", id);
 
         Supplier supplier = this.supplierRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("supplier not found with id " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found with id " + id));
 
         this.supplierRepository.delete(supplier);
     }
 
-    public static SupplierDto mapToDto(Supplier suppliers) {
+    public static SupplierDto mapToDto(Supplier supplier) {
         return new SupplierDto(
-                suppliers.getSupplierId(),
-                suppliers.getCompanyName(),
-                suppliers.getContactName(),
-                suppliers.getContactTitle(),
-                suppliers.getPhone(),
-                suppliers.getFax(),
-                suppliers.getHomepage()
+                supplier.getSupplierId(),
+                supplier.getCompanyName(),
+                supplier.getContactName(),
+                supplier.getContactTitle(),
+                supplier.getPhone(),
+                supplier.getFax(),
+                supplier.getHomepage(),
+                supplier.getCreateDate(),
+                supplier.getModifiedDate()
         );
     }
 }

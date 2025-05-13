@@ -4,12 +4,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 Accept: application/json
 
 ### GET Suppliers With Filter
-GET http://localhost:8080/api/suppliers/?supplierId=1,2,3&companyName=Company Name 1&contactName=Contact Name 1&contactTitle=Contact Title 1&phone=08123456789&fax=08987654321&homepage=Homepage 1&page=0&size=50
+GET http://localhost:8080/api/suppliers/?supplierId=1,2,3&companyName=Company&contactName=Contact&contactTitle=Title&phone=1234567890&fax=1234567890&homepage=https://example.com&page=0&size=50
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJzdWIiOiJhZG1pbmlzdHJhdG9yIiwibmFtZSI6IkFkbWluaXN0cmF0b3IiLCJqdGkiOiIyNjU1Mjc0YS0yODI5LTQwNTMtYTUxNS0wNjE1ZDdhYTZhMjMiLCJleHAiOjE3MzUyMTgyMzQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcyNTUiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MjU1In0.ik-BJu9-LM2OObBGiKTw2q5vuOtgyc1QiZr0Pm1BmdI
 Accept: application/json
 
 ### GET Supplier By Id
-GET http://localhost:8080/api/suppliers/30
+GET http://localhost:8080/api/suppliers/500
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJzdWIiOiJhZG1pbmlzdHJhdG9yIiwibmFtZSI6IkFkbWluaXN0cmF0b3IiLCJqdGkiOiIyNjU1Mjc0YS0yODI5LTQwNTMtYTUxNS0wNjE1ZDdhYTZhMjMiLCJleHAiOjE3MzUyMTgyMzQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcyNTUiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MjU1In0.ik-BJu9-LM2OObBGiKTw2q5vuOtgyc1QiZr0Pm1BmdI
 Accept: application/json
 
@@ -20,30 +20,30 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "companyName": "Company Name 1",
-  "contactName": "Contact Name 1",
-  "contactTitle": "Contact Title 1",
-  "phone": "08123456789",
-  "fax": "08987654321",
-  "homepage": "Homepage 1"
+  "companyName": "Company",
+  "contactName": "Contact",
+  "contactTitle": "Title",
+  "phone": "1234567890",
+  "fax": "1234567890",
+  "homepage": "https://example.com"
 }
 
 ### PUT Supplier
-PUT http://localhost:8080/api/suppliers/30
+PUT http://localhost:8080/api/suppliers/500
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJzdWIiOiJhZG1pbmlzdHJhdG9yIiwibmFtZSI6IkFkbWluaXN0cmF0b3IiLCJqdGkiOiIyNjU1Mjc0YS0yODI5LTQwNTMtYTUxNS0wNjE1ZDdhYTZhMjMiLCJleHAiOjE3MzUyMTgyMzQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcyNTUiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MjU1In0.ik-BJu9-LM2OObBGiKTw2q5vuOtgyc1QiZr0Pm1BmdI
 Content-Type: application/json
 Accept: application/json
 
 {
-  "companyName": "Company Name 1 Update",
-  "contactName": "Contact Name 1 Update",
-  "contactTitle": "Contact Title 1 Update",
-  "phone": "08123456789",
-  "fax": "08987654321",
-  "homepage": "Homepage 1 Update"
+  "companyName": "New Company",
+  "contactName": "New Contact",
+  "contactTitle": "New Title",
+  "phone": "0987654321",
+  "fax": "0987654321",
+  "homepage": "https://new-example.com"
 }
 
 ### DELETE Supplier
-DELETE http://localhost:8080/api/suppliers/30
+DELETE http://localhost:8080/api/suppliers/500
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmF0b3IiLCJzdWIiOiJhZG1pbmlzdHJhdG9yIiwibmFtZSI6IkFkbWluaXN0cmF0b3IiLCJqdGkiOiIyNjU1Mjc0YS0yODI5LTQwNTMtYTUxNS0wNjE1ZDdhYTZhMjMiLCJleHAiOjE3MzUyMTgyMzQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcyNTUiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MjU1In0.ik-BJu9-LM2OObBGiKTw2q5vuOtgyc1QiZr0Pm1BmdI
 Accept: application/json

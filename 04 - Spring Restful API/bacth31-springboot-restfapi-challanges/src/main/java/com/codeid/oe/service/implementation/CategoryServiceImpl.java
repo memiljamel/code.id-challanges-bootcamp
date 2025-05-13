@@ -4,10 +4,11 @@ import com.codeid.oe.model.dto.CategoryDto;
 import com.codeid.oe.model.entity.Category;
 import com.codeid.oe.repository.CategoryRepository;
 import com.codeid.oe.service.CategoryService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
         log.debug("Request to get category : {}", id);
 
         Category category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Category not found with id " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found with id " + id));
 
         return mapToDto(category);
     }
@@ -55,8 +56,8 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto update(Short id, CategoryDto entity) {
         log.debug("Request to update category : {}", id);
 
-        var category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Category not found with id " + id));
+        Category category = this.categoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found with id " + id));
         category.setCategoryName(entity.getCategoryName());
         category.setDescription(entity.getDescription());
         this.categoryRepository.save(category);
@@ -68,8 +69,8 @@ public class CategoryServiceImpl implements CategoryService {
     public void delete(Short id) {
         log.debug("Request to delete category : {}", id);
 
-        var category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Cannot find category with id " + id));
+        Category category = this.categoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found with id " + id));
 
         this.categoryRepository.delete(category);
     }
@@ -79,7 +80,9 @@ public class CategoryServiceImpl implements CategoryService {
                 category.getCategoryId(),
                 category.getCategoryName(),
                 category.getDescription(),
-                category.getPicture()
+                category.getPicture(),
+                category.getCreateDate(),
+                category.getModifiedDate()
         );
     }
 }
