@@ -51,9 +51,8 @@ public class SupplierServiceImpl implements SupplierService {
         supplier.setPhone(entity.getPhone());
         supplier.setFax(entity.getFax());
         supplier.setHomepage(entity.getHomepage());
-        supplierRepository.save(supplier);
 
-        return mapToDto(supplier);
+        return mapToDto(this.supplierRepository.save(supplier));
     }
 
     @Override
@@ -68,9 +67,8 @@ public class SupplierServiceImpl implements SupplierService {
         supplier.setPhone(entity.getPhone());
         supplier.setFax(entity.getFax());
         supplier.setHomepage(entity.getHomepage());
-        supplierRepository.save(supplier);
 
-        return mapToDto(supplier);
+        return mapToDto(supplierRepository.save(supplier));
     }
 
     @Override

@@ -69,9 +69,8 @@ public class ProductServiceImpl implements ProductService {
         product.setReorderLevel(entity.getReorderLevel());
         product.setDiscontinued(entity.getDiscontinued());
         product.setPicture(entity.getPicture());
-        this.productRepository.save(product);
 
-        return mapToDto(product);
+        return mapToDto(this.productRepository.save(product));
     }
 
     @Override
@@ -102,9 +101,7 @@ public class ProductServiceImpl implements ProductService {
             product.setPicture(entity.getPicture());
         }
 
-        this.productRepository.save(product);
-
-        return mapToDto(product);
+        return mapToDto(this.productRepository.save(product));
     }
 
     @Override

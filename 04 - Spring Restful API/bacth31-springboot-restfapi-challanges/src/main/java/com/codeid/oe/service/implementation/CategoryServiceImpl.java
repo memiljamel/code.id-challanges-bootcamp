@@ -47,9 +47,9 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
         category.setCategoryName(entity.getCategoryName());
         category.setDescription(entity.getDescription());
-        this.categoryRepository.save(category);
+        category.setPicture(entity.getPicture());
 
-        return mapToDto(category);
+        return mapToDto(this.categoryRepository.save(category));
     }
 
     @Override
@@ -60,9 +60,9 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found with id " + id));
         category.setCategoryName(entity.getCategoryName());
         category.setDescription(entity.getDescription());
-        this.categoryRepository.save(category);
+        category.setPicture(entity.getPicture());
 
-        return mapToDto(category);
+        return mapToDto(this.categoryRepository.save(category));
     }
 
     @Override

@@ -47,9 +47,8 @@ public class ShipperServiceImpl implements ShipperService {
         Shipper shipper = new Shipper();
         shipper.setCompanyName(entity.getCompanyName());
         shipper.setPhone(entity.getPhone());
-        this.shipperRepository.save(shipper);
 
-        return mapToDto(shipper);
+        return mapToDto(this.shipperRepository.save(shipper));
     }
 
     @Override
@@ -60,9 +59,8 @@ public class ShipperServiceImpl implements ShipperService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Shipper not found with id " + id));
         shipper.setCompanyName(entity.getCompanyName());
         shipper.setPhone(entity.getPhone());
-        this.shipperRepository.save(shipper);
 
-        return mapToDto(shipper);
+        return mapToDto(this.shipperRepository.save(shipper));
     }
 
     @Override
