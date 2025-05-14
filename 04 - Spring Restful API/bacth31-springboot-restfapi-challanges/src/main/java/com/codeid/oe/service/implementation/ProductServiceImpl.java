@@ -185,12 +185,12 @@ public class ProductServiceImpl implements ProductService {
 
     public static ProductImageDto mapToImageDto(ProductImage productImage) {
         return new ProductImageDto(
-            productImage.getImageId(),
-            productImage.getFileName(),
-            productImage.getFileSize(),
-            productImage.getFileType(),
-            productImage.getFileUri(),
-            productImage.getProduct().getProductId()
+                productImage.getImageId(),
+                productImage.getFileName(),
+                productImage.getFileSize(),
+                productImage.getFileType(),
+                productImage.getFileUri(),
+                productImage.getProduct().getProductId()
         );
     }
 }

@@ -129,7 +129,7 @@ public class ProductController extends BaseMultipartController<ProductDto, Short
         try {
             List<String> filenames = new ArrayList<>();
 
-            for (var file: files) {
+            for (var file : files) {
                 String filename = fileStorageService.storeFileWithRandomName(file);
 
                 filenames.add(filename);

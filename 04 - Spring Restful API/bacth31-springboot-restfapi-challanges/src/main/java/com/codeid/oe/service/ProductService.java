@@ -2,7 +2,6 @@ package com.codeid.oe.service;
 
 import com.codeid.oe.model.dto.ProductDto;
 import com.codeid.oe.model.dto.ProductImageDto;
-import com.codeid.oe.model.entity.Product;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
