@@ -13,7 +13,5 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Shor
 
     List<ProductImage> findAllByProduct(Product product);
 
-    Optional<ProductImage> findByProductAndImageId(Product product, Short imageId);
-
     void deleteByProduct(Product product);
 }
