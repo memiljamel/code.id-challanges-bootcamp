@@ -1,0 +1,19 @@
+### GET Order By Id
+GET http://localhost:8080/api/orders/1
+Accept: application/json
+
+### POST Order
+POST http://localhost:8080/api/orders/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userId": 1,
+  "locationId": 1400,
+  "shipperId": 1,
+  "bankCode": "014"
+}
+
+### DELETE Order
+DELETE http://localhost:8080/api/orders/1
+Accept: application/json

@@ -1,0 +1,29 @@
+### POST Cart Item
+POST http://localhost:8080/api/carts/1/items/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "productId": 2,
+  "quantity": 1,
+  "discount": 50
+}
+
+### PUT Cart Item
+PUT http://localhost:8080/api/carts/1/items/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "productId": 1,
+  "quantity": 1,
+  "discount": 50
+}
+
+### DELETE Cart Item
+DELETE http://localhost:8080/api/carts/1/items/1
+Accept: application/json
+
+### GET Cart Item Selected
+GET http://localhost:8080/api/carts/1/items/selected
+Accept: application/json

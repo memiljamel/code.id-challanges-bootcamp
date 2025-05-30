@@ -1,0 +1,2 @@
+ALTER TABLE oe.cart_items
+    ADD COLUMN selected BOOLEAN DEFAULT FALSE;

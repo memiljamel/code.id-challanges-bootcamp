@@ -1,0 +1,43 @@
+### GET Suppliers
+GET http://localhost:8080/api/suppliers/
+Accept: application/json
+
+### GET Suppliers With Filter
+GET http://localhost:8080/api/suppliers/?page=0&size=10&sort=supplierId,desc
+Accept: application/json
+
+### GET Supplier By Id
+GET http://localhost:8080/api/suppliers/-47
+Accept: application/json
+
+### POST Supplier
+POST http://localhost:8080/api/suppliers/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "companyName": "Company",
+  "contactName": "Contact",
+  "contactTitle": "Title",
+  "phone": "1234567890",
+  "fax": "1234567890",
+  "homepage": "https://example.com"
+}
+
+### PUT Supplier
+PUT http://localhost:8080/api/suppliers/-47
+Content-Type: application/json
+Accept: application/json
+
+{
+  "companyName": "New Company",
+  "contactName": "New Contact",
+  "contactTitle": "New Title",
+  "phone": "0987654321",
+  "fax": "0987654321",
+  "homepage": "https://new-example.com"
+}
+
+### DELETE Supplier
+DELETE http://localhost:8080/api/suppliers/-47
+Accept: application/json

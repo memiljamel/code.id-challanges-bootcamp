@@ -1,0 +1,35 @@
+### GET Shippers
+GET http://localhost:8080/api/shippers/
+Accept: application/json
+
+### GET Shippers With Filter
+GET http://localhost:8080/api/shippers/?page=0&size=10&sort=shipperId,desc
+Accept: application/json
+
+### GET Shipper By Id
+GET http://localhost:8080/api/shippers/-47
+Accept: application/json
+
+### POST Shipper
+POST http://localhost:8080/api/shippers/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "companyName": "Company",
+  "phone": "1234567890"
+}
+
+### PUT Shipper
+PUT http://localhost:8080/api/shippers/-47
+Content-Type: application/json
+Accept: application/json
+
+{
+  "companyName": "New Company",
+  "phone": "0987654321"
+}
+
+### DELETE Shipper
+DELETE http://localhost:8080/api/shippers/-47
+Accept: application/json

@@ -1,0 +1,139 @@
+### GET Product
+GET http://localhost:8080/api/products/
+Accept: application/json
+
+### GET Product With Filter
+GET http://localhost:8080/api/products/?page=0&size=20&sort=productId,desc
+Accept: application/json
+
+### GET Product With Search
+GET http://localhost:8080/api/products/search?page=0&size=20&sort=unitPrice,desc&keyword=condim
+Accept: application/json
+
+### GET Product By Id
+GET http://localhost:8080/api/products/-46
+Accept: application/json
+
+### POST Product
+POST http://localhost:8080/api/products/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "productName": "Product",
+  "supplierId": 1,
+  "categoryId": 1,
+  "quantityPerUnit": "12 Unit / Box",
+  "unitPrice": 10000.0,
+  "unitsInStock": 500,
+  "unitsInOrder": 200,
+  "reorderLevel": 25,
+  "discontinued": 0
+}
+
+### POST Product Upload
+POST http://localhost:8080/api/products/upload
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
+
+--boundary
+Content-Disposition: form-data; name="data"
+Content-Type: application/json
+
+{
+  "productName": "Product",
+  "supplierId": 1,
+  "categoryId": 1,
+  "quantityPerUnit": "12 Unit / Box",
+  "unitPrice": 10000.0,
+  "unitsInStock": 500,
+  "unitsInOrder": 200,
+  "reorderLevel": 25,
+  "discontinued": 0
+}
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="photo.png"
+Content-Type: image/png
+
+< ./photo.png
+
+--boundary--
+
+### PUT Product
+PUT http://localhost:8080/api/products/-47
+Content-Type: application/json
+Accept: application/json
+
+{
+  "productName": "New Product",
+  "supplierId": 2,
+  "categoryId": 2,
+  "quantityPerUnit": "22 Unit / Box",
+  "unitPrice": 20000.0,
+  "unitsInStock": 1000,
+  "unitsInOrder": 400,
+  "reorderLevel": 50,
+  "discontinued": 1
+}
+
+### PUT Product Upload
+PUT http://localhost:8080/api/products/-46/upload
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
+
+--boundary
+Content-Disposition: form-data; name="data"
+Content-Type: application/json
+
+{
+  "productName": "New Product",
+  "supplierId": 2,
+  "categoryId": 2,
+  "quantityPerUnit": "22 Unit / Box",
+  "unitPrice": 20000.0,
+  "unitsInStock": 1000,
+  "unitsInOrder": 400,
+  "reorderLevel": 50,
+  "discontinued": 1
+}
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="photo.png"
+Content-Type: image/png
+
+< ./photo.png
+
+--boundary--
+
+### DELETE Product
+DELETE http://localhost:8080/api/products/-47
+Content-Type: application/json
+
+### POST Product Image
+POST http://localhost:8080/api/products/-46/images
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
+
+--boundary
+Content-Disposition: form-data; name="merge"
+
+false
+
+--boundary
+Content-Disposition: form-data; name="images[0]"; filename="photo.png"
+Content-Type: image/png
+
+< ./photo.png
+
+--boundary--
+Content-Disposition: form-data; name="images[1]"; filename="photo.png"
+Content-Type: image/png
+
+< ./photo.png
+
+--boundary--
+
+### DELETE Product Image
+DELETE http://localhost:8080/api/products/-46/images/1
+Content-Type: application/json

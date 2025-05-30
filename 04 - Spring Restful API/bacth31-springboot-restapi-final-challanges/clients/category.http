@@ -1,0 +1,61 @@
+### GET Categories
+GET http://localhost:8080/api/categories/
+Accept: application/json
+
+### GET Categories With Filter
+GET http://localhost:8080/api/categories/?page=0&size=10&sort=categoryId,desc
+Accept: application/json
+
+### GET Category By Id
+GET http://localhost:8080/api/categories/-47
+Accept: application/json
+
+### POST Category
+POST http://localhost:8080/api/categories/
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
+
+--boundary
+Content-Disposition: form-data; name="categoryName"
+
+Category
+
+--boundary
+Content-Disposition: form-data; name="description"
+
+Description
+
+--boundary
+Content-Disposition: form-data; name="picture"; filename="photo.png"
+Content-Type: image/png
+
+< ./photo.png
+
+--boundary--
+
+### PUT Category
+PUT http://localhost:8080/api/categories/-47
+Content-Type: multipart/form-data; boundary=boundary
+Accept: application/json
+
+--boundary
+Content-Disposition: form-data; name="categoryName"
+
+New Category
+
+--boundary
+Content-Disposition: form-data; name="description"
+
+New Description
+
+--boundary
+Content-Disposition: form-data; name="picture"; filename="photo.png"
+Content-Type: image/png
+
+< ./photo.png
+
+--boundary--
+
+### DELETE Category
+DELETE http://localhost:8080/api/categories/-47
+Content-Type: application/json
