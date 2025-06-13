@@ -19,22 +19,22 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<ErrorResponse<String>> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
-        ErrorResponse<String> response = ErrorResponse.<String>builder()
-                .status(HttpStatus.PAYLOAD_TOO_LARGE)
-                .code(413)
-                .message(ex.getMessage())
-                .build();
+        ErrorResponse<String> response = new ErrorResponse<>(
+                HttpStatus.PAYLOAD_TOO_LARGE,
+                413,
+                ex.getMessage()
+        );
 
         return new ResponseEntity<>(response, HttpStatus.PAYLOAD_TOO_LARGE);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse<String>> handleEntityNotFoundException(EntityNotFoundException ex) {
-        ErrorResponse<String> response = ErrorResponse.<String>builder()
-                .status(HttpStatus.NOT_FOUND)
-                .code(404)
-                .message(ex.getMessage())
-                .build();
+        ErrorResponse<String> response = new ErrorResponse<>(
+                HttpStatus.NOT_FOUND,
+                404,
+                ex.getMessage()
+        );
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
@@ -47,23 +47,23 @@ public class GlobalExceptionHandler {
                         Collectors.mapping(FieldError::getDefaultMessage, Collectors.toList())
                 ));
 
-        ErrorResponse<Map<String, List<String>>> response = ErrorResponse.<Map<String, List<String>>>builder()
-                .status(HttpStatus.BAD_REQUEST)
-                .code(400)
-                .message("Validation failed")
-                .errors(errors)
-                .build();
+        ErrorResponse<Map<String, List<String>>> response = new ErrorResponse<>(
+                HttpStatus.BAD_REQUEST,
+                400,
+                "Validation failed",
+                errors
+        );
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse<String>> handleException(Exception ex) {
-        ErrorResponse<String> response = ErrorResponse.<String>builder()
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .code(500)
-                .message(ex.getMessage())
-                .build();
+        ErrorResponse<String> response = new ErrorResponse<>(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                500,
+                ex.getMessage()
+        );
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }

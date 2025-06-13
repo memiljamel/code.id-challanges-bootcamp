@@ -12,7 +12,7 @@ public interface BaseCrudService<CreateReq, UpdateReq, Res, ID> {
 
     Res save(CreateReq request);
 
-    Res update(UpdateReq request);
+    Res update(ID id, UpdateReq request);
 
     void delete(ID id);
 }

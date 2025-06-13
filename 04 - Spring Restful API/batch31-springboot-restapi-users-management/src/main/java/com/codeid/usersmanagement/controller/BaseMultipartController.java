@@ -1,6 +1,5 @@
 package com.codeid.usersmanagement.controller;
 
-import com.codeid.usersmanagement.model.request.UpdateIdRequest;
 import com.codeid.usersmanagement.model.response.ApiResponse;
 import com.codeid.usersmanagement.service.FileStorageService;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Files;
 
-public abstract class BaseMultipartController<CreateRequest, UpdateRequest extends UpdateIdRequest<ID>, Response, ID>
+public abstract class BaseMultipartController<CreateRequest, UpdateRequest, Response, ID>
         extends BaseCrudController<CreateRequest, UpdateRequest, Response, ID> {
 
     @Autowired

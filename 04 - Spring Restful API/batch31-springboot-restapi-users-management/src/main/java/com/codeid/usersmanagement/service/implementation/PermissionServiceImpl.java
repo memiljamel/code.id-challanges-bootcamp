@@ -47,10 +47,10 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public PermissionResponse save(CreatePermissionRequest request) {
         Permission permission = new Permission();
-        permission.setPermissionType(request.getPermissionType());
+        permission.setPermissionType(request.permissionType());
 
-        Role role = roleRepository.findById(request.getRoleId())
-                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.getRoleId()));
+        Role role = roleRepository.findById(request.roleId())
+                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.roleId()));
         permission.setRole(role);
 
         permissionRepository.save(permission);
@@ -60,13 +60,13 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Transactional
     @Override
-    public PermissionResponse update(UpdatePermissionRequest request) {
-        Permission permission = permissionRepository.findById(request.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Permission not found with id " + request.getId()));
-        permission.setPermissionType(request.getPermissionType());
+    public PermissionResponse update(Short id, UpdatePermissionRequest request) {
+        Permission permission = permissionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Permission not found with id " + id));
+        permission.setPermissionType(request.permissionType());
 
-        Role role = roleRepository.findById(request.getRoleId())
-                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.getRoleId()));
+        Role role = roleRepository.findById(request.roleId())
+                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.roleId()));
         permission.setRole(role);
 
         permissionRepository.save(permission);
@@ -83,12 +83,12 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     protected static PermissionResponse mapToPermissionResponse(Permission permission) {
-        return PermissionResponse.builder()
-                .permissionId(permission.getPermissionId())
-                .permissionType(permission.getPermissionType())
-                .roleId(permission.getRole().getRoleId())
-                .createdDate(permission.getCreatedDate())
-                .modifiedDate(permission.getModifiedDate())
-                .build();
+        return new PermissionResponse(
+                permission.getPermissionId(),
+                permission.getPermissionType(),
+                permission.getRole().getRoleId(),
+                permission.getCreatedDate(),
+                permission.getModifiedDate()
+        );
     }
 }

@@ -1,27 +1,24 @@
 package com.codeid.usersmanagement.model.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.time.Instant;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ErrorResponse<T> {
+public record ErrorResponse<T>(
+        Instant timestamp,
+        HttpStatus status,
+        Integer code,
+        String message,
 
-    @Builder.Default
-    private Instant timestamp = Instant.now();
+        @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+        T errors
+) {
+    public ErrorResponse(HttpStatus status, Integer code, String message, T errors) {
+        this(Instant.now(), status, code, message, errors);
+    }
 
-    private HttpStatus status;
-
-    private Integer code;
-
-    private String message;
-
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    private T errors;
+    public ErrorResponse(HttpStatus status, Integer code, String message) {
+        this(Instant.now(), status, code, message, null);
+    }
 }

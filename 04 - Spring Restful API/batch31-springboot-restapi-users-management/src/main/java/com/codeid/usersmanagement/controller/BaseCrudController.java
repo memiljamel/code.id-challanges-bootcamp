@@ -1,6 +1,5 @@
 package com.codeid.usersmanagement.controller;
 
-import com.codeid.usersmanagement.model.request.UpdateIdRequest;
 import com.codeid.usersmanagement.model.response.ApiResponse;
 import com.codeid.usersmanagement.service.BaseCrudService;
 import jakarta.validation.Valid;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public abstract class BaseCrudController<CreateRequest, UpdateRequest extends UpdateIdRequest<ID>, Response, ID> {
+public abstract class BaseCrudController<CreateRequest, UpdateRequest, Response, ID> {
 
     protected abstract BaseCrudService<CreateRequest, UpdateRequest, Response, ID> getService();
 
@@ -23,12 +22,12 @@ public abstract class BaseCrudController<CreateRequest, UpdateRequest extends Up
     public ResponseEntity<ApiResponse<List<Response>>> getAll(Pageable pageable) {
         List<Response> data = getService().findAll(pageable);
 
-        ApiResponse<List<Response>> response = ApiResponse.<List<Response>>builder()
-                .status(HttpStatus.OK)
-                .code(200)
-                .message("Data retrieved successfully")
-                .data(data)
-                .build();
+        ApiResponse<List<Response>> response = new ApiResponse<>(
+                HttpStatus.OK,
+                200,
+                "Data retrieved successfully",
+                data
+        );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -40,12 +39,12 @@ public abstract class BaseCrudController<CreateRequest, UpdateRequest extends Up
     public ResponseEntity<ApiResponse<Response>> getById(@PathVariable ID id) {
         Response data = getService().findById(id);
 
-        ApiResponse<Response> response = ApiResponse.<Response>builder()
-                .status(HttpStatus.OK)
-                .code(200)
-                .message("Data retrieved successfully by ID")
-                .data(data)
-                .build();
+        ApiResponse<Response> response = new ApiResponse<>(
+                HttpStatus.OK,
+                200,
+                "Data retrieved successfully by ID",
+                data
+        );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -58,12 +57,12 @@ public abstract class BaseCrudController<CreateRequest, UpdateRequest extends Up
     public ResponseEntity<ApiResponse<Response>> create(@RequestBody @Valid CreateRequest request) {
         Response data = getService().save(request);
 
-        ApiResponse<Response> response = ApiResponse.<Response>builder()
-                .status(HttpStatus.CREATED)
-                .code(201)
-                .message("Data created successfully")
-                .data(data)
-                .build();
+        ApiResponse<Response> response = new ApiResponse<>(
+                HttpStatus.CREATED,
+                201,
+                "Data created successfully",
+                data
+        );
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -74,16 +73,14 @@ public abstract class BaseCrudController<CreateRequest, UpdateRequest extends Up
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<ApiResponse<Response>> update(@PathVariable ID id, @RequestBody @Valid UpdateRequest request) {
-        request.setId(id);
+        Response data = getService().update(id, request);
 
-        Response data = getService().update(request);
-
-        ApiResponse<Response> response = ApiResponse.<Response>builder()
-                .status(HttpStatus.OK)
-                .code(200)
-                .message("Data updated successfully")
-                .data(data)
-                .build();
+        ApiResponse<Response> response = new ApiResponse<>(
+                HttpStatus.OK,
+                200,
+                "Data updated successfully",
+                data
+        );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

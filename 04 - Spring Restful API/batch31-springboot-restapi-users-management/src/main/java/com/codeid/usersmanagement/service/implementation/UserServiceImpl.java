@@ -43,19 +43,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse save(CreateUserRequest request) {
         User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(request.getPassword());
+        user.setUsername(request.username());
+        user.setPassword(request.password());
         userRepository.save(user);
 
         return mapToUserResponse(user);
     }
 
     @Override
-    public UserResponse update(UpdateUserRequest request) {
-        User user = userRepository.findById(request.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.getId()));
-        user.setUsername(request.getUsername());
-        user.setPassword(request.getPassword());
+    public UserResponse update(Short id, UpdateUserRequest request) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + id));
+        user.setUsername(request.username());
+        user.setPassword(request.password());
         userRepository.save(user);
 
         return mapToUserResponse(user);
@@ -75,12 +75,12 @@ public class UserServiceImpl implements UserService {
                 .map(Role::getRoleName)
                 .toList();
 
-        return UserResponse.builder()
-                .userId(user.getUserId())
-                .username(user.getUsername())
-                .roles(roles)
-                .createdDate(user.getCreatedDate())
-                .modifiedDate(user.getModifiedDate())
-                .build();
+        return new UserResponse(
+                user.getUserId(),
+                user.getUsername(),
+                roles,
+                user.getCreatedDate(),
+                user.getModifiedDate()
+        );
     }
 }

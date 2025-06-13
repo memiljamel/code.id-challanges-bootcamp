@@ -51,10 +51,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleResponse save(CreateRoleRequest request) {
         Role role = new Role();
-        role.setRoleName(request.getRoleName());
+        role.setRoleName(request.roleName());
 
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.getUserId()));
+        User user = userRepository.findById(request.userId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.userId()));
         role.setUser(user);
 
         roleRepository.save(role);
@@ -64,13 +64,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Transactional
     @Override
-    public RoleResponse update(UpdateRoleRequest request) {
-        Role role = roleRepository.findById(request.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.getId()));
-        role.setRoleName(request.getRoleName());
+    public RoleResponse update(Short id, UpdateRoleRequest request) {
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + id));
+        role.setRoleName(request.roleName());
 
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.getUserId()));
+        User user = userRepository.findById(request.userId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.userId()));
         role.setUser(user);
 
         roleRepository.save(role);
@@ -92,13 +92,13 @@ public class RoleServiceImpl implements RoleService {
                 .map(Permission::getPermissionType)
                 .toList();
 
-        return RoleResponse.builder()
-                .roleId(role.getRoleId())
-                .roleName(role.getRoleName())
-                .userId(role.getUser().getUserId())
-                .permissions(permissions)
-                .createdDate(role.getCreatedDate())
-                .modifiedDate(role.getModifiedDate())
-                .build();
+        return new RoleResponse(
+                role.getRoleId(),
+                role.getRoleName(),
+                role.getUser().getUserId(),
+                permissions,
+                role.getCreatedDate(),
+                role.getModifiedDate()
+        );
     }
 }
