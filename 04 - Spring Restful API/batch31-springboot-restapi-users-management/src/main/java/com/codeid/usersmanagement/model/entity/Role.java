@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "roles", schema = "person")
-public class Role {
+public class Role extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
@@ -25,8 +25,8 @@ public class Role {
     @Column(name = "role_name", length = 200, nullable = false)
     private String roleName;
 
-    @OneToOne
-    @JoinColumn(name = "username", referencedColumnName = "username")
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "role")

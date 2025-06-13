@@ -2,6 +2,9 @@ package com.codeid.usersmanagement.model.response;
 
 import lombok.*;
 
+import java.time.Instant;
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -9,9 +12,13 @@ import lombok.*;
 @AllArgsConstructor
 public class UserResponse {
 
+    private Short userId;
+
     private String username;
 
-    private String password;
+    private List<String> roles;
 
-    private Short roleId;
+    private Instant createdDate;
+
+    private Instant modifiedDate;
 }

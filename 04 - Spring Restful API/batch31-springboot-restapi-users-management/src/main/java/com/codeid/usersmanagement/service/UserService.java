@@ -8,5 +8,5 @@ public interface UserService extends BaseCrudService<
         CreateUserRequest,
         UpdateUserRequest,
         UserResponse,
-        String> {
+        Short> {
 }

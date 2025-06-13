@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Files;
 
-public abstract class BaseMultipartController<CreateReq, UpdateReq extends UpdateIdRequest<ID>, Res, ID>
-        extends BaseCrudController<CreateReq, UpdateReq, Res, ID> {
+public abstract class BaseMultipartController<CreateRequest, UpdateRequest extends UpdateIdRequest<ID>, Response, ID>
+        extends BaseCrudController<CreateRequest, UpdateRequest, Response, ID> {
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -28,8 +28,8 @@ public abstract class BaseMultipartController<CreateReq, UpdateReq extends Updat
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public abstract ResponseEntity<ApiResponse<Res>> upload(
-            @RequestPart(name = "data") @Valid CreateReq request,
+    public abstract ResponseEntity<ApiResponse<Response>> upload(
+            @RequestPart(name = "data") @Valid CreateRequest request,
             @RequestPart(name = "file") MultipartFile file
     );
 
@@ -38,9 +38,9 @@ public abstract class BaseMultipartController<CreateReq, UpdateReq extends Updat
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public abstract ResponseEntity<ApiResponse<Res>> upload(
+    public abstract ResponseEntity<ApiResponse<Response>> upload(
             @PathVariable ID id,
-            @RequestPart(name = "data") @Valid UpdateReq request,
+            @RequestPart(name = "data") @Valid UpdateRequest request,
             @RequestPart(name = "file") MultipartFile file
     );
 

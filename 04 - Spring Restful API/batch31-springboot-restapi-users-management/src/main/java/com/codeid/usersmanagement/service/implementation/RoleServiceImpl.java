@@ -2,19 +2,24 @@ package com.codeid.usersmanagement.service.implementation;
 
 import com.codeid.usersmanagement.model.entity.Permission;
 import com.codeid.usersmanagement.model.entity.Role;
+import com.codeid.usersmanagement.model.entity.User;
+import com.codeid.usersmanagement.model.enumeration.PermissionType;
 import com.codeid.usersmanagement.model.request.CreateRoleRequest;
 import com.codeid.usersmanagement.model.request.UpdateRoleRequest;
 import com.codeid.usersmanagement.model.response.RoleResponse;
-import com.codeid.usersmanagement.repository.PermissionRepository;
 import com.codeid.usersmanagement.repository.RoleRepository;
+import com.codeid.usersmanagement.repository.UserRepository;
 import com.codeid.usersmanagement.service.RoleService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -23,7 +28,7 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Autowired
-    private PermissionRepository permissionRepository;
+    private UserRepository userRepository;
 
     @Override
     public List<RoleResponse> findAll(Pageable pageable) {
@@ -42,31 +47,31 @@ public class RoleServiceImpl implements RoleService {
         return mapToRoleResponse(role);
     }
 
+    @Transactional
     @Override
     public RoleResponse save(CreateRoleRequest request) {
         Role role = new Role();
         role.setRoleName(request.getRoleName());
 
-        List<Permission> permissions = request.getPermissionIds().stream()
-                .map((permissionId) -> permissionRepository.findById(permissionId)
-                        .orElseThrow(() -> new EntityNotFoundException("Permission not found with id " + permissionId))).toList();
-        role.setPermissions(permissions);
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.getUserId()));
+        role.setUser(user);
 
         roleRepository.save(role);
 
         return mapToRoleResponse(role);
     }
 
+    @Transactional
     @Override
     public RoleResponse update(UpdateRoleRequest request) {
         Role role = roleRepository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.getId()));
         role.setRoleName(request.getRoleName());
 
-        List<Permission> permissions = request.getPermissionIds().stream()
-                .map((permissionId) -> permissionRepository.findById(permissionId)
-                        .orElseThrow(() -> new EntityNotFoundException("Permission not found with id " + permissionId))).toList();
-        role.setPermissions(permissions);
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.getUserId()));
+        role.setUser(user);
 
         roleRepository.save(role);
 
@@ -82,14 +87,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     protected static RoleResponse mapToRoleResponse(Role role) {
-        List<Short> permissionIds = role.getPermissions().stream()
-                .map(Permission::getPermissionId)
+        List<PermissionType> permissions = Stream.ofNullable(role.getPermissions())
+                .flatMap(Collection::stream)
+                .map(Permission::getPermissionType)
                 .toList();
 
         return RoleResponse.builder()
                 .roleId(role.getRoleId())
                 .roleName(role.getRoleName())
-                .permissionIds(permissionIds)
+                .userId(role.getUser().getUserId())
+                .permissions(permissions)
+                .createdDate(role.getCreatedDate())
+                .modifiedDate(role.getModifiedDate())
                 .build();
     }
 }

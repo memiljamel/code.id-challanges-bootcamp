@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public abstract class BaseCrudController<CreateReq, UpdateReq extends UpdateIdRequest<ID>, Res, ID> {
+public abstract class BaseCrudController<CreateRequest, UpdateRequest extends UpdateIdRequest<ID>, Response, ID> {
 
-    protected abstract BaseCrudService<CreateReq, UpdateReq, Res, ID> getService();
+    protected abstract BaseCrudService<CreateRequest, UpdateRequest, Response, ID> getService();
 
     @GetMapping(
             path = "/",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<ApiResponse<List<Res>>> getAll(Pageable pageable) {
-        List<Res> data = getService().findAll(pageable);
+    public ResponseEntity<ApiResponse<List<Response>>> getAll(Pageable pageable) {
+        List<Response> data = getService().findAll(pageable);
 
-        ApiResponse<List<Res>> response = ApiResponse.<List<Res>>builder()
+        ApiResponse<List<Response>> response = ApiResponse.<List<Response>>builder()
                 .status(HttpStatus.OK)
                 .code(200)
                 .message("Data retrieved successfully")
@@ -37,10 +37,10 @@ public abstract class BaseCrudController<CreateReq, UpdateReq extends UpdateIdRe
             path = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<ApiResponse<Res>> getById(@PathVariable ID id) {
-        Res data = getService().findById(id);
+    public ResponseEntity<ApiResponse<Response>> getById(@PathVariable ID id) {
+        Response data = getService().findById(id);
 
-        ApiResponse<Res> response = ApiResponse.<Res>builder()
+        ApiResponse<Response> response = ApiResponse.<Response>builder()
                 .status(HttpStatus.OK)
                 .code(200)
                 .message("Data retrieved successfully by ID")
@@ -55,10 +55,10 @@ public abstract class BaseCrudController<CreateReq, UpdateReq extends UpdateIdRe
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<ApiResponse<Res>> create(@RequestBody @Valid CreateReq request) {
-        Res data = getService().save(request);
+    public ResponseEntity<ApiResponse<Response>> create(@RequestBody @Valid CreateRequest request) {
+        Response data = getService().save(request);
 
-        ApiResponse<Res> response = ApiResponse.<Res>builder()
+        ApiResponse<Response> response = ApiResponse.<Response>builder()
                 .status(HttpStatus.CREATED)
                 .code(201)
                 .message("Data created successfully")
@@ -73,12 +73,12 @@ public abstract class BaseCrudController<CreateReq, UpdateReq extends UpdateIdRe
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<ApiResponse<Res>> update(@PathVariable ID id, @RequestBody @Valid UpdateReq request) {
+    public ResponseEntity<ApiResponse<Response>> update(@PathVariable ID id, @RequestBody @Valid UpdateRequest request) {
         request.setId(id);
 
-        Res data = getService().update(request);
+        Response data = getService().update(request);
 
-        ApiResponse<Res> response = ApiResponse.<Res>builder()
+        ApiResponse<Response> response = ApiResponse.<Response>builder()
                 .status(HttpStatus.OK)
                 .code(200)
                 .message("Data updated successfully")

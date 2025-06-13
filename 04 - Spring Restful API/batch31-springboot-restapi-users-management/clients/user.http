@@ -1,0 +1,35 @@
+### GET Users
+GET http://localhost:8080/api/users/
+Accept: application/json
+
+### GET Users With Filter
+GET http://localhost:8080/api/users/?page=0&size=10&sort=userId,desc
+Accept: application/json
+
+### GET User By Id
+GET http://localhost:8080/api/users/1
+Accept: application/json
+
+### POST User
+POST http://localhost:8080/api/users/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "Username 1",
+  "password": "Password 1"
+}
+
+### PUT User
+PUT http://localhost:8080/api/users/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "New Username 1",
+  "password": "New Password 1"
+}
+
+### DELETE User
+DELETE http://localhost:8080/api/users/1
+Accept: application/json

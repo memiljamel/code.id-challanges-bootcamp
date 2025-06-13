@@ -1,7 +1,9 @@
 package com.codeid.usersmanagement.model.response;
 
+import com.codeid.usersmanagement.model.enumeration.PermissionType;
 import lombok.*;
 
+import java.time.Instant;
 import java.util.List;
 
 @Getter
@@ -15,5 +17,11 @@ public class RoleResponse {
 
     private String roleName;
 
-    private List<Short> permissionIds;
+    private Short userId;
+
+    private List<PermissionType> permissions;
+
+    private Instant createdDate;
+
+    private Instant modifiedDate;
 }

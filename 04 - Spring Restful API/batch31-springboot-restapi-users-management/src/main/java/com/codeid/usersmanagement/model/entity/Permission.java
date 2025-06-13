@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "permissions", schema = "person")
-public class Permission {
+public class Permission extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "permission_seq")
@@ -21,7 +21,8 @@ public class Permission {
     @Column(name = "permission_id")
     private Short permissionId;
 
-    @Column(name = "permission_type")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "permission_type", length = 25)
     private PermissionType permissionType;
 
     @ManyToOne

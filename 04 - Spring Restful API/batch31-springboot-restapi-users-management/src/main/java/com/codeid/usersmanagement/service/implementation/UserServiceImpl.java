@@ -5,7 +5,6 @@ import com.codeid.usersmanagement.model.entity.User;
 import com.codeid.usersmanagement.model.request.CreateUserRequest;
 import com.codeid.usersmanagement.model.request.UpdateUserRequest;
 import com.codeid.usersmanagement.model.response.UserResponse;
-import com.codeid.usersmanagement.repository.RoleRepository;
 import com.codeid.usersmanagement.repository.UserRepository;
 import com.codeid.usersmanagement.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,16 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Override
     public List<UserResponse> findAll(Pageable pageable) {
@@ -35,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse findById(String id) {
+    public UserResponse findById(Short id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id " + id));
 
@@ -47,11 +45,6 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
-
-        Role role = roleRepository.findById(request.getRoleId())
-                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.getRoleId()));
-        user.setRole(role);
-
         userRepository.save(user);
 
         return mapToUserResponse(user);
@@ -63,28 +56,31 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.getId()));
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
-
-        Role role = roleRepository.findById(request.getRoleId())
-                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.getRoleId()));
-        user.setRole(role);
-
         userRepository.save(user);
 
         return mapToUserResponse(user);
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Short id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id " + id));
 
         userRepository.delete(user);
     }
 
-    protected static UserResponse mapToUserResponse(User role) {
+    protected static UserResponse mapToUserResponse(User user) {
+        List<String> roles = Stream.ofNullable(user.getRoles())
+                .flatMap(Collection::stream)
+                .map(Role::getRoleName)
+                .toList();
+
         return UserResponse.builder()
-                .username(role.getUsername())
-                .roleId(role.getRole().getRoleId())
+                .userId(user.getUserId())
+                .username(user.getUsername())
+                .roles(roles)
+                .createdDate(user.getCreatedDate())
+                .modifiedDate(user.getModifiedDate())
                 .build();
     }
 }

@@ -1,0 +1,35 @@
+### GET Roles
+GET http://localhost:8080/api/roles/
+Accept: application/json
+
+### GET Roles With Filter
+GET http://localhost:8080/api/roles/?page=0&size=10&sort=roleId,desc
+Accept: application/json
+
+### GET Role By Id
+GET http://localhost:8080/api/roles/1
+Accept: application/json
+
+### POST Role
+POST http://localhost:8080/api/roles/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "roleName": "Role 1",
+  "userId": 1
+}
+
+### PUT Role
+PUT http://localhost:8080/api/roles/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "roleName": "New Role 1",
+  "userId": 1
+}
+
+### DELETE Role
+DELETE http://localhost:8080/api/roles/1
+Accept: application/json

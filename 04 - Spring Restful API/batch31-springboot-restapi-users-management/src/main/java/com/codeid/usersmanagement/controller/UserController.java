@@ -15,13 +15,13 @@ public class UserController extends BaseCrudController<
         CreateUserRequest,
         UpdateUserRequest,
         UserResponse,
-        String> {
+        Short> {
 
     @Autowired
     private UserService userService;
 
     @Override
-    protected BaseCrudService<CreateUserRequest, UpdateUserRequest, UserResponse, String> getService() {
+    protected BaseCrudService<CreateUserRequest, UpdateUserRequest, UserResponse, Short> getService() {
         return userService;
     }
 }

@@ -1,0 +1,35 @@
+### GET Permissions
+GET http://localhost:8080/api/permissions/
+Accept: application/json
+
+### GET Permissions With Filter
+GET http://localhost:8080/api/permissions/?page=0&size=10&sort=permissionId,desc
+Accept: application/json
+
+### GET Permission By Id
+GET http://localhost:8080/api/permissions/1
+Accept: application/json
+
+### POST Permission
+POST http://localhost:8080/api/permissions/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "permissionType": "READ",
+  "roleId": 1
+}
+
+### PUT Permission
+PUT http://localhost:8080/api/permissions/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "permissionType": "READ_WRITE",
+  "roleId": 1
+}
+
+### DELETE Permission
+DELETE http://localhost:8080/api/permissions/1
+Accept: application/json

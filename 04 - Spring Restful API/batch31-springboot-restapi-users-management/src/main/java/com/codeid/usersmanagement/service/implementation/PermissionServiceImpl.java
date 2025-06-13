@@ -1,16 +1,19 @@
 package com.codeid.usersmanagement.service.implementation;
 
 import com.codeid.usersmanagement.model.entity.Permission;
+import com.codeid.usersmanagement.model.entity.Role;
 import com.codeid.usersmanagement.model.request.CreatePermissionRequest;
 import com.codeid.usersmanagement.model.request.UpdatePermissionRequest;
 import com.codeid.usersmanagement.model.response.PermissionResponse;
 import com.codeid.usersmanagement.repository.PermissionRepository;
+import com.codeid.usersmanagement.repository.RoleRepository;
 import com.codeid.usersmanagement.service.PermissionService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +22,9 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Autowired
     private PermissionRepository permissionRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public List<PermissionResponse> findAll(Pageable pageable) {
@@ -37,20 +43,32 @@ public class PermissionServiceImpl implements PermissionService {
         return mapToPermissionResponse(permission);
     }
 
+    @Transactional
     @Override
     public PermissionResponse save(CreatePermissionRequest request) {
         Permission permission = new Permission();
         permission.setPermissionType(request.getPermissionType());
+
+        Role role = roleRepository.findById(request.getRoleId())
+                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.getRoleId()));
+        permission.setRole(role);
+
         permissionRepository.save(permission);
 
         return mapToPermissionResponse(permission);
     }
 
+    @Transactional
     @Override
     public PermissionResponse update(UpdatePermissionRequest request) {
         Permission permission = permissionRepository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Permission not found with id " + request.getId()));
         permission.setPermissionType(request.getPermissionType());
+
+        Role role = roleRepository.findById(request.getRoleId())
+                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.getRoleId()));
+        permission.setRole(role);
+
         permissionRepository.save(permission);
 
         return mapToPermissionResponse(permission);
@@ -68,6 +86,9 @@ public class PermissionServiceImpl implements PermissionService {
         return PermissionResponse.builder()
                 .permissionId(permission.getPermissionId())
                 .permissionType(permission.getPermissionType())
+                .roleId(permission.getRole().getRoleId())
+                .createdDate(permission.getCreatedDate())
+                .modifiedDate(permission.getModifiedDate())
                 .build();
     }
 }
