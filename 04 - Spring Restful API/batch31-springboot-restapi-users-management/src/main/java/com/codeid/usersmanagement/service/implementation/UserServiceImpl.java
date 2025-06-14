@@ -45,9 +45,10 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(request.username());
         user.setPassword(request.password());
-        userRepository.save(user);
 
-        return mapToUserResponse(user);
+        User saved = userRepository.save(user);
+
+        return mapToUserResponse(saved);
     }
 
     @Override
@@ -56,9 +57,10 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id " + id));
         user.setUsername(request.username());
         user.setPassword(request.password());
-        userRepository.save(user);
 
-        return mapToUserResponse(user);
+        User updated = userRepository.save(user);
+
+        return mapToUserResponse(updated);
     }
 
     @Override

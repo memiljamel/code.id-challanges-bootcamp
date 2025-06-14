@@ -21,10 +21,10 @@ import java.util.List;
 public class PermissionServiceImpl implements PermissionService {
 
     @Autowired
-    private PermissionRepository permissionRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private PermissionRepository permissionRepository;
 
     @Override
     public List<PermissionResponse> findAll(Pageable pageable) {
@@ -46,32 +46,32 @@ public class PermissionServiceImpl implements PermissionService {
     @Transactional
     @Override
     public PermissionResponse save(CreatePermissionRequest request) {
-        Permission permission = new Permission();
-        permission.setPermissionType(request.permissionType());
-
         Role role = roleRepository.findById(request.roleId())
                 .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.roleId()));
+
+        Permission permission = new Permission();
+        permission.setPermissionType(request.permissionType());
         permission.setRole(role);
 
-        permissionRepository.save(permission);
+        Permission saved = permissionRepository.save(permission);
 
-        return mapToPermissionResponse(permission);
+        return mapToPermissionResponse(saved);
     }
 
     @Transactional
     @Override
     public PermissionResponse update(Short id, UpdatePermissionRequest request) {
+        Role role = roleRepository.findById(request.roleId())
+                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.roleId()));
+
         Permission permission = permissionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Permission not found with id " + id));
         permission.setPermissionType(request.permissionType());
-
-        Role role = roleRepository.findById(request.roleId())
-                .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + request.roleId()));
         permission.setRole(role);
 
-        permissionRepository.save(permission);
+        Permission updated = permissionRepository.save(permission);
 
-        return mapToPermissionResponse(permission);
+        return mapToPermissionResponse(updated);
     }
 
     @Override

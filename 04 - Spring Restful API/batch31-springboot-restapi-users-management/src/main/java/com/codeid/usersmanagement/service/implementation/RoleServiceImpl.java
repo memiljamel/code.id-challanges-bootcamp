@@ -25,10 +25,10 @@ import java.util.stream.Stream;
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    private RoleRepository roleRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
     @Override
     public List<RoleResponse> findAll(Pageable pageable) {
@@ -50,32 +50,32 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public RoleResponse save(CreateRoleRequest request) {
-        Role role = new Role();
-        role.setRoleName(request.roleName());
-
         User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.userId()));
+
+        Role role = new Role();
+        role.setRoleName(request.roleName());
         role.setUser(user);
 
-        roleRepository.save(role);
+        Role saved = roleRepository.save(role);
 
-        return mapToRoleResponse(role);
+        return mapToRoleResponse(saved);
     }
 
     @Transactional
     @Override
     public RoleResponse update(Short id, UpdateRoleRequest request) {
+        User user = userRepository.findById(request.userId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.userId()));
+
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + id));
         role.setRoleName(request.roleName());
-
-        User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id " + request.userId()));
         role.setUser(user);
 
-        roleRepository.save(role);
+        Role updated = roleRepository.save(role);
 
-        return mapToRoleResponse(role);
+        return mapToRoleResponse(updated);
     }
 
     @Override
